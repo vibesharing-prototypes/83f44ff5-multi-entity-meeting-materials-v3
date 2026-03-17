@@ -99,20 +99,6 @@ const CATEGORY_CONFIG: Record<Category, {
   },
 }
 
-// ─── LogoWithTooltip ──────────────────────────────────────────────────────────
-
-function LogoWithTooltip({ entityId }: { entityId: number }) {
-  const entity = ENTITIES.find(e => e.id === entityId)!
-  return (
-    <div className="relative group/logo flex-shrink-0">
-      <EntityLogo entity={entity} size="sm" />
-      <div className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1.5 bg-slate-800 rounded-lg shadow-md opacity-0 group-hover/logo:opacity-100 transition-opacity z-20 whitespace-nowrap">
-        <p className="text-[11px] font-semibold text-white leading-snug">{entity.name}</p>
-        <p className="text-[10px] text-slate-400 leading-snug">{entity.country}</p>
-      </div>
-    </div>
-  )
-}
 
 // ─── Detail modal ─────────────────────────────────────────────────────────────
 
