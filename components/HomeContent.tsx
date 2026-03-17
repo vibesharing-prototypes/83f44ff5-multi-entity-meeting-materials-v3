@@ -4,8 +4,8 @@ import { useMemo } from 'react'
 import { SECTIONS } from '@/components/sections'
 import { AgentActivityProvider } from '@/components/AgentActivityContext'
 import AgentActivityBanner from '@/components/AgentActivityBanner'
-import NeedsYouNow from '@/components/NeedsYouNow'
-import EditSuggestions from '@/components/EditSuggestions'
+import BookBuilding from '@/components/BookBuilding'
+import PlanningSuggestions from '@/components/PlanningSuggestions'
 import AgentUsecaseHeroes from '@/components/AgentUsecaseHeroes'
 import Footer from '@/components/Footer'
 import { ProtoStateProvider } from '@/components/ProtoStateContext'
@@ -25,9 +25,9 @@ export default function HomeContent() {
           <div className="mb-6">
             <AgentActivityBanner />
           </div>
-          <div className="grid grid-cols-2 gap-6 items-stretch">
-            <NeedsYouNow />
-            <EditSuggestions />
+          <div className="flex flex-col gap-6">
+            <BookBuilding />
+            <PlanningSuggestions />
           </div>
           <AgentUsecaseHeroes />
           <Footer />
