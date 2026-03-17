@@ -12,15 +12,14 @@ export interface Entity {
   connectedApps: string[]
 }
 
-export interface ActionItem {
+export interface BookBuildingItem {
   id: number
   entityId: number
-  entityName: string
-  entityTag: string
-  tagColor: string
-  title: string
-  description: string
-  actionLabel: string
+  category: 'gap' | 'overdue' | 'assignment' | 'signature' | 'approval'
+  title: string       // gap/opportunity as a plain statement
+  meta: string        // short context for row meta line
+  detail: string      // longer explanation for modal body
+  actionLabel: string // CTA button text
   states: ProtoState[]
 }
 
@@ -121,135 +120,171 @@ export const ENTITIES: Entity[] = [
   },
 ]
 
-export const ACTION_ITEMS: ActionItem[] = [
+export const BOOK_BUILDING_ITEMS: BookBuildingItem[] = [
   {
     id: 1,
-    entityId: 2,
-    entityName: 'Apex Ventures GmbH',
-    entityTag: 'APEX VENTURES',
-    tagColor: 'bg-amber-700',
-    title: 'GDPR Sign-off Required',
-    description: 'EU data processing addendum requires legal sign-off before board pack can be finalised.',
-    actionLabel: 'Review Item',
-    states: ['busy', 'critical'],
+    entityId: 4,
+    category: 'signature',
+    title: 'Resolution awaiting 3 of 5 director signatures',
+    meta: 'Nordic Solutions · 3 of 5 complete',
+    detail: 'Capital restructuring resolution approved in December — 3 of 5 e-signatures complete.',
+    actionLabel: 'Send reminder',
+    states: ['calm', 'busy'],
   },
   {
     id: 2,
-    entityId: 1,
-    entityName: 'Meridian Capital Holdings Ltd',
-    entityTag: 'MERIDIAN CAPITAL',
-    tagColor: 'bg-blue-700',
-    title: 'CEO Report Unassigned',
-    description: 'Board pack section 3.2 has no owner. Meeting in 15 days.',
-    actionLabel: 'Assign Owner',
-    states: ['busy', 'critical'],
+    entityId: 6,
+    category: 'approval',
+    title: 'Pack at 95% — Chair approval required before distribution',
+    meta: 'Atlantic Resources · Pack at 95%',
+    detail: 'Pack is complete and awaiting final sign-off from the Chair before it can be distributed to directors.',
+    actionLabel: 'Send for approval',
+    states: ['calm', 'busy'],
   },
   {
     id: 3,
-    entityId: 5,
-    entityName: 'Pacific Rim Operations Pte Ltd',
-    entityTag: 'PACIFIC RIM',
-    tagColor: 'bg-teal-700',
-    title: 'Q4 Financials Not Received',
-    description: 'Q4 Financial Statements not received from Finance. Pack cannot progress to review without them.',
-    actionLabel: 'Notify Finance',
+    entityId: 1,
+    category: 'gap',
+    title: 'No cybersecurity topic on the agenda in 12 months',
+    meta: 'Meridian Capital · Last covered Mar 2025',
+    detail: 'Cybersecurity was last discussed in March 2025. Rising threat landscape may make this a material governance gap.',
+    actionLabel: 'Add section',
     states: ['busy', 'critical'],
   },
   {
     id: 4,
-    entityId: 4,
-    entityName: 'Nordic Solutions AB',
-    entityTag: 'NORDIC SOLUTIONS',
-    tagColor: 'bg-indigo-700',
-    title: 'Resolution Awaiting Signatures',
-    description: 'Capital restructuring resolution approved in December — 3 of 5 director e-signatures complete.',
-    actionLabel: 'Send for Signature',
-    states: ['calm', 'busy'],
+    entityId: 2,
+    category: 'gap',
+    title: 'Carbon neutrality goals set Feb 2025 — no check-in since',
+    meta: 'Apex Ventures · 13 months since last mention',
+    detail: 'Board committed to interim carbon reduction targets 13 months ago. No progress update has been added to any subsequent agenda.',
+    actionLabel: 'Add to agenda',
+    states: ['busy', 'critical'],
   },
   {
     id: 5,
-    entityId: 6,
-    entityName: 'Atlantic Resources Inc',
-    entityTag: 'ATLANTIC RESOURCES',
-    tagColor: 'bg-emerald-700',
-    title: 'Chair Sign-off Pending',
-    description: 'Pack is complete and at 95% — awaiting final approval from chair before distribution.',
-    actionLabel: 'Send for Approval',
-    states: ['calm', 'busy'],
+    entityId: 1,
+    category: 'assignment',
+    title: 'Financial Review section has no presenter assigned',
+    meta: 'Meridian Capital · Meeting in 15 days',
+    detail: 'Section 3.2 is unassigned. The board meeting is in 15 days and the pack is already in review.',
+    actionLabel: 'Assign owner',
+    states: ['busy', 'critical'],
+  },
+  {
+    id: 6,
+    entityId: 2,
+    category: 'approval',
+    title: 'GDPR data processing addendum sign-off blocking pack completion',
+    meta: 'Apex Ventures · Pack blocked',
+    detail: 'EU data processing addendum requires legal sign-off before the pack can be finalised and distributed.',
+    actionLabel: 'Review item',
+    states: ['critical'],
+  },
+  {
+    id: 7,
+    entityId: 5,
+    category: 'overdue',
+    title: 'Q4 Financial Statements not received — pack cannot progress',
+    meta: 'Pacific Rim Ops · Meeting in 9 days',
+    detail: 'Finance has not submitted Q4 statements. The pack is blocked at 60% and the board meeting is in under two weeks.',
+    actionLabel: 'Notify Finance',
+    states: ['critical'],
   },
 ]
 
-export interface EditSuggestion {
+export interface PlanningSuggestion {
   id: number
-  entities: Array<{ tag: string; tagColor: string; entityId: number }>
-  sourceType: 'regulation' | 'market' | 'source-material'
+  entities: Array<{ entityId: number }>
+  sourceType: 'regulation' | 'market' | 'source-material' | 'personnel' | 'geopolitical' | 'reorder'
   sourceLabel: string
   title: string
   reason: string
-  affectedSection: string
-  suggestedPrompt: string
+  affectedSection?: string
+  suggestedPrompt?: string
+  actionLabel: string
   states: ProtoState[]
 }
 
-export const EDIT_SUGGESTIONS: EditSuggestion[] = [
+export const PLANNING_SUGGESTIONS: PlanningSuggestion[] = [
   {
     id: 1,
-    entities: [{ tag: 'APEX VENTURES', tagColor: 'bg-amber-700', entityId: 2 }],
-    sourceType: 'regulation',
-    sourceLabel: 'EU AI Act',
-    title: 'Update AI Act compliance deadline in Risk section',
-    reason: 'EU AI Act enforcement guidelines revised 24 Feb 2026 — key deadline shifted from Q2 to Q3 2026.',
-    affectedSection: 'Risk & Compliance',
-    suggestedPrompt: 'Update the Risk & Compliance section for Apex Ventures to reflect the revised EU AI Act enforcement deadline (Q3 2026) and adjust the remediation budget timeline accordingly.',
-    states: ['calm', 'busy', 'critical'],
+    entities: [{ entityId: 2 }],
+    sourceType: 'personnel',
+    sourceLabel: 'CFO Succession',
+    title: 'Update presenter for Financial Review and Budget — Anna Bauer appointed CFO 10 Mar',
+    reason: 'Klaus Weber (departing CFO) is still listed as presenter on Sections 3 and 5. Anna Bauer was appointed on 10 March 2026.',
+    affectedSection: 'Financial Review',
+    suggestedPrompt: 'Update the presenter field on Sections 3 and 5 of the Apex Ventures board pack from Klaus Weber to Anna Bauer, effective 10 March 2026.',
+    actionLabel: 'Update presenter',
+    states: ['calm', 'busy'],
   },
   {
     id: 2,
-    entities: [{ tag: 'MERIDIAN CAPITAL', tagColor: 'bg-blue-700', entityId: 1 }],
+    entities: [{ entityId: 2 }],
     sourceType: 'regulation',
-    sourceLabel: 'FCA Guidance',
-    title: 'Reference updated FCA Consumer Duty guidance in CEO Report',
-    reason: 'FCA published updated Consumer Duty implementation guidance on 1 Mar 2026, affecting all UK authorised firms.',
-    affectedSection: 'CEO Report',
-    suggestedPrompt: "Add a paragraph to Meridian Capital's CEO Report referencing the FCA's updated Consumer Duty guidance (Mar 2026) and the entity's current compliance posture.",
+    sourceLabel: 'EU AI Act',
+    title: 'EU AI Act enforcement deadline shifted to Q3 — update Risk section',
+    reason: 'EU AI Act enforcement guidelines revised 24 Feb 2026 — key deadline shifted from Q2 to Q3 2026.',
+    affectedSection: 'Risk & Compliance',
+    suggestedPrompt: 'Update the Risk & Compliance section for Apex Ventures to reflect the revised EU AI Act enforcement deadline (Q3 2026) and adjust the remediation budget timeline accordingly.',
+    actionLabel: 'Apply',
     states: ['calm', 'busy', 'critical'],
   },
   {
     id: 3,
-    entities: [{ tag: 'HORIZON DIGITAL', tagColor: 'bg-violet-700', entityId: 3 }],
+    entities: [{ entityId: 3 }],
     sourceType: 'market',
     sourceLabel: 'ECB Rate Cut',
-    title: 'Revise FX hedging commentary — ECB rate now 2.90%',
+    title: 'ECB cut to 2.90% — revise FX hedging commentary',
     reason: 'ECB cut rates 25bps to 2.90% on 6 Mar 2026. Pack currently references the superseded rate of 3.15%.',
     affectedSection: 'Q4 Financial Statements',
     suggestedPrompt: "Update Horizon Digital's Q4 Financial Statements to reflect the ECB rate cut to 2.90% (6 Mar 2026) and revise all FX hedging commentary to align with the current rate environment.",
+    actionLabel: 'Apply',
     states: ['calm', 'busy', 'critical'],
   },
   {
     id: 4,
-    entities: [{ tag: 'ATLANTIC RESOURCES', tagColor: 'bg-emerald-700', entityId: 6 }],
-    sourceType: 'source-material',
-    sourceLabel: 'Auditor Revision',
-    title: 'Reconcile EBITDA — PwC revised Q4 management accounts',
-    reason: 'PwC submitted revised management accounts on 28 Feb 2026. EBITDA now £2.6m; pack currently states £2.8m.',
-    affectedSection: 'Q4 Financial Statements',
-    suggestedPrompt: "Reconcile the Q4 Financial Statements for Atlantic Resources with PwC's revised management accounts (28 Feb 2026): update EBITDA from £2.8m to £2.6m and recalculate the EBITDA margin.",
+    entities: [{ entityId: 4 }],
+    sourceType: 'reorder',
+    sourceLabel: 'Agenda Reorder',
+    title: 'Move EU Regulatory Update to agenda item 2 — AI Act enforcement revised',
+    reason: 'Item is currently listed at position 7. Given the AI Act enforcement revision, board attention is needed early in the meeting.',
+    actionLabel: 'Reorder',
     states: ['busy', 'critical'],
   },
   {
     id: 5,
-    entities: [
-      { tag: 'APEX VENTURES', tagColor: 'bg-amber-700', entityId: 2 },
-      { tag: 'HORIZON DIGITAL', tagColor: 'bg-violet-700', entityId: 3 },
-      { tag: 'NORDIC SOLUTIONS', tagColor: 'bg-indigo-700', entityId: 4 },
-      { tag: 'IBERIAN HOLDINGS', tagColor: 'bg-orange-700', entityId: 7 },
-    ],
+    entities: [{ entityId: 6 }],
+    sourceType: 'source-material',
+    sourceLabel: 'Auditor Revision',
+    title: 'Reconcile EBITDA — PwC revised Q4 accounts (£2.6m, was £2.8m)',
+    reason: 'PwC submitted revised management accounts on 28 Feb 2026. EBITDA now £2.6m; pack currently states £2.8m.',
+    affectedSection: 'Q4 Financial Statements',
+    suggestedPrompt: "Reconcile the Q4 Financial Statements for Atlantic Resources with PwC's revised management accounts: update EBITDA from £2.8m to £2.6m and recalculate EBITDA margin.",
+    actionLabel: 'Apply',
+    states: ['busy', 'critical'],
+  },
+  {
+    id: 6,
+    entities: [{ entityId: 1 }, { entityId: 6 }, { entityId: 8 }],
+    sourceType: 'geopolitical',
+    sourceLabel: 'Geopolitical Risk',
+    title: 'Add Geopolitical Risk section — armed conflict escalation affecting supply chain exposure',
+    reason: 'Escalation in Eastern Europe since 12 Mar 2026 may affect supply chain exposure for three entities with operations or counterparties in the region.',
+    actionLabel: 'Add section',
+    states: ['critical'],
+  },
+  {
+    id: 7,
+    entities: [{ entityId: 2 }, { entityId: 3 }, { entityId: 4 }, { entityId: 7 }],
     sourceType: 'regulation',
     sourceLabel: 'CSRD',
-    title: 'Add mandatory ESG disclosure section to all EU entity board packs',
+    title: 'Add mandatory ESG disclosure section to all 4 EU entity packs',
     reason: 'CSRD mandatory reporting applies from Jan 2026 for qualifying EU entities. No ESG disclosure section exists in any of the 4 affected packs.',
     affectedSection: 'ESG Disclosure',
     suggestedPrompt: 'Add an ESG disclosure section to board packs for Apex Ventures, Horizon Digital, Nordic Solutions, and Iberian Holdings, covering scope 1 & 2 emissions, social metrics, and board oversight of sustainability strategy as required under CSRD.',
+    actionLabel: 'Apply',
     states: ['busy', 'critical'],
   },
 ]
