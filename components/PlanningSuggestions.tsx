@@ -22,24 +22,62 @@ function buildEditSteps(connectedApps: string[], affectedSection: string): strin
 
 type SourceType = PlanningSuggestion['sourceType']
 
-const SOURCE_CONFIG: Record<SourceType, { className: string }> = {
-  regulation: { className: 'text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800' },
-  market:     { className: 'text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800' },
-  'source-material': { className: 'text-violet-700 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-800' },
-  personnel:  { className: 'text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800' },
-  geopolitical: { className: 'text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800' },
-  reorder:    { className: 'text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800' },
-}
-
-// ─── BatchIcon ────────────────────────────────────────────────────────────────
-
-function BatchIcon() {
-  return (
-    <svg className="w-2.5 h-2.5 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="4" y="2" width="8" height="10" rx="1.5" opacity="0.5" />
-      <rect x="2" y="4" width="9" height="10" rx="1.5" />
-    </svg>
-  )
+const SOURCE_CONFIG: Record<SourceType, {
+  badgeClasses: string
+  glowColor: string
+  revealBorderColor: string
+  priorityFill: string
+  priorityGradient: string
+  priorityLabel: string
+}> = {
+  regulation: {
+    badgeClasses: 'text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800',
+    glowColor: 'rgba(244,63,94,0.07)',
+    revealBorderColor: '#fecdd3',
+    priorityFill: '85%',
+    priorityGradient: 'linear-gradient(90deg, #D3222A, #f97316)',
+    priorityLabel: 'High priority',
+  },
+  geopolitical: {
+    badgeClasses: 'text-orange-700 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800',
+    glowColor: 'rgba(249,115,22,0.07)',
+    revealBorderColor: '#fed7aa',
+    priorityFill: '85%',
+    priorityGradient: 'linear-gradient(90deg, #D3222A, #f97316)',
+    priorityLabel: 'High priority',
+  },
+  market: {
+    badgeClasses: 'text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800',
+    glowColor: 'rgba(59,130,246,0.07)',
+    revealBorderColor: '#bfdbfe',
+    priorityFill: '70%',
+    priorityGradient: 'linear-gradient(90deg, #f59e0b, #eab308)',
+    priorityLabel: 'Medium-high',
+  },
+  'source-material': {
+    badgeClasses: 'text-violet-700 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-800',
+    glowColor: 'rgba(139,92,246,0.07)',
+    revealBorderColor: '#c4b5fd',
+    priorityFill: '70%',
+    priorityGradient: 'linear-gradient(90deg, #f59e0b, #eab308)',
+    priorityLabel: 'Medium-high',
+  },
+  personnel: {
+    badgeClasses: 'text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800',
+    glowColor: 'rgba(20,184,166,0.07)',
+    revealBorderColor: '#99f6e4',
+    priorityFill: '55%',
+    priorityGradient: 'linear-gradient(90deg, #f59e0b, #eab308)',
+    priorityLabel: 'Medium',
+  },
+  reorder: {
+    badgeClasses: 'text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800',
+    glowColor: 'rgba(59,130,246,0.07)',
+    revealBorderColor: '#bfdbfe',
+    priorityFill: '55%',
+    priorityGradient: 'linear-gradient(90deg, #f59e0b, #eab308)',
+    priorityLabel: 'Medium',
+  },
 }
 
 // ─── LogoStack ────────────────────────────────────────────────────────────────
@@ -51,9 +89,9 @@ function LogoStack({ entityIds }: { entityIds: number[] }) {
   if (!primary) return null
   return (
     <div className="relative group/logos flex-shrink-0">
-      <EntityLogo entity={primary} size="sm" />
+      <EntityLogo entity={primary} size="md" />
       {extra > 0 && (
-        <div className="absolute -bottom-1 -right-1 min-w-[16px] h-4 px-1 bg-slate-700 text-white text-[9px] font-bold rounded-full flex items-center justify-center leading-none pointer-events-none">
+        <div className="absolute -bottom-1 -right-1 min-w-[18px] h-[18px] px-1 bg-slate-700 text-white text-[9px] font-bold rounded-full flex items-center justify-center leading-none pointer-events-none">
           +{extra}
         </div>
       )}
@@ -102,7 +140,7 @@ function PlanningSuggestionModal({
 
         <div className="px-6 pt-6 pb-5">
           <div className="flex items-start gap-2.5 mb-4 pr-8 flex-wrap">
-            <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium flex-shrink-0 mt-0.5 ${sourceStyle.className}`}>
+            <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold flex-shrink-0 mt-0.5 ${sourceStyle.badgeClasses}`}>
               {suggestion.sourceLabel}
             </span>
             <div className="flex flex-wrap gap-x-3 gap-y-2">
@@ -211,14 +249,21 @@ export default function PlanningSuggestions() {
     handleApply(suggestion)
   }
 
+  function handleDetails(e: React.MouseEvent, suggestion: PlanningSuggestion) {
+    e.stopPropagation()
+    setSelectedSuggestion(suggestion)
+  }
+
   const stateSuggestions = PLANNING_SUGGESTIONS.filter(s => s.states.includes(state))
   const visibleSuggestions = showAll ? stateSuggestions : stateSuggestions.slice(0, VISIBLE_COUNT)
   const hasMore = stateSuggestions.length > VISIBLE_COUNT
 
+  const hasHoverReveal = (s: PlanningSuggestion) => !!(s.affectedSection || s.suggestedPrompt)
+
   return (
     <section className="flex flex-col">
       <div className="mb-3">
-        <h2 className="text-xs font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-wide">
+        <h2 className="text-[11px] font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-wide">
           Planning Suggestions
         </h2>
         <p className="text-xs text-slate-500 dark:text-zinc-500 mt-0.5">
@@ -226,75 +271,135 @@ export default function PlanningSuggestions() {
         </p>
       </div>
 
-      <div className="flex-1 rounded-lg border border-slate-200 dark:border-zinc-700 divide-y divide-slate-100 dark:divide-zinc-800 flex flex-col">
+      <div className="space-y-3">
         {visibleSuggestions.map((suggestion, i) => {
           const status = cardStatus[suggestion.id]
           const isApplying = status === 'applying'
           const isApplied = status === 'applied'
           const isBatch = suggestion.entities.length > 1
-          const sourceStyle = SOURCE_CONFIG[suggestion.sourceType]
-          const isFirst = i === 0
-          const isLast = !hasMore && i === visibleSuggestions.length - 1
+          const cfg = SOURCE_CONFIG[suggestion.sourceType]
+          const primaryEntity = ENTITIES.find(e => e.id === suggestion.entities[0]?.entityId)
 
           return (
             <div
               key={suggestion.id}
               onClick={isApplying ? undefined : () => setSelectedSuggestion(suggestion)}
-              className={`flex items-center gap-3 px-4 py-3 min-h-[64px] overflow-hidden transition-colors
-                ${isFirst ? 'rounded-t-lg' : ''}
-                ${isLast ? 'rounded-b-lg' : ''}
-                ${isApplying
-                  ? 'bg-slate-50 dark:bg-zinc-800 cursor-default'
-                  : 'bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 active:bg-slate-100 dark:active:bg-zinc-700 cursor-pointer'
-                }`}
+              className="suggestion-card group relative rounded-[20px] border border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden cursor-pointer transition-all duration-300 hover:border-black/[0.14] dark:hover:border-zinc-600 hover:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
+              style={{ animationDelay: `${i * 120}ms` } as React.CSSProperties}
             >
-              {/* Logo(s) */}
-              <div className={isApplying || isApplied ? 'opacity-40' : ''}>
-                <LogoStack entityIds={suggestion.entities.map(e => e.entityId)} />
-              </div>
+              {/* Breathing glow */}
+              <div
+                className="suggestion-card-glow absolute top-0 left-0 right-0 h-20 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse 80% 100% at 50% 0%, ${cfg.glowColor} 0%, transparent 100%)` }}
+              />
 
-              {/* Content */}
-              <div className={`flex-1 min-w-0 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className={`inline-flex items-center px-1.5 py-px rounded text-[10px] font-medium ${sourceStyle.className}`}>
+              <div className={`relative p-[22px_24px] ${isApplying ? 'cursor-default' : ''}`}>
+                {/* Entity row */}
+                <div className={`flex items-center gap-2.5 mb-3.5 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
+                  {isBatch ? (
+                    <LogoStack entityIds={suggestion.entities.map(e => e.entityId)} />
+                  ) : primaryEntity ? (
+                    <EntityLogo entity={primaryEntity} size="md" />
+                  ) : null}
+                  <div className="flex-1 min-w-0">
+                    {primaryEntity && (
+                      <>
+                        <p className="text-[13px] font-semibold text-slate-900 dark:text-zinc-100">
+                          {primaryEntity.name}
+                          {isBatch && <span className="text-slate-400 dark:text-zinc-500 font-normal"> + {suggestion.entities.length - 1} more</span>}
+                        </p>
+                        <p className="text-xs text-slate-500 dark:text-zinc-400 font-normal">{primaryEntity.country} · Board: {primaryEntity.nextBoard}</p>
+                      </>
+                    )}
+                  </div>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap flex-shrink-0 ${cfg.badgeClasses}`}>
                     {suggestion.sourceLabel}
                   </span>
-                  {isBatch && (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 px-1.5 py-px rounded">
-                      <BatchIcon />
-                      {suggestion.entities.length} packs
-                    </span>
-                  )}
                 </div>
-                <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100 leading-snug line-clamp-2">
+
+                {/* Title */}
+                <p className={`text-[16px] font-semibold text-slate-900 dark:text-zinc-100 leading-[1.35] mb-2 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
                   {suggestion.title}
                 </p>
-              </div>
 
-              {/* CTA / status */}
-              {isApplying ? (
-                <div className="flex items-center gap-1.5 flex-shrink-0">
-                  <svg className="w-3.5 h-3.5 animate-spin text-slate-400" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                  </svg>
-                  <span className="text-[11px] text-slate-400">Applying…</span>
+                {/* Reason — always visible */}
+                <p className={`text-[13px] text-slate-500 dark:text-zinc-400 leading-relaxed ${isApplying || isApplied ? 'opacity-40' : ''}`}>
+                  {suggestion.reason}
+                </p>
+
+                {/* Hover-reveal block */}
+                {hasHoverReveal(suggestion) && (
+                  <div
+                    className={`max-h-0 opacity-0 overflow-hidden transition-all duration-400 ease-in-out group-hover:max-h-[150px] group-hover:opacity-100 group-hover:mt-2.5 ${isApplying || isApplied ? 'opacity-40' : ''}`}
+                  >
+                    <div
+                      className="border-l-2 pl-3 py-1"
+                      style={{ borderColor: cfg.revealBorderColor }}
+                    >
+                      {suggestion.affectedSection && (
+                        <p className="text-[11px] font-semibold text-slate-500 dark:text-zinc-500 uppercase tracking-wide mb-1">
+                          Affected section: {suggestion.affectedSection}
+                        </p>
+                      )}
+                      {suggestion.suggestedPrompt && (
+                        <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed">
+                          {suggestion.suggestedPrompt}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Priority bar */}
+                <div className={`flex items-center gap-2 mt-4 mb-4 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
+                  <div className="flex-1 h-1 rounded-full bg-slate-100 dark:bg-zinc-800 overflow-hidden">
+                    <div
+                      className="suggestion-bar-fill h-full rounded-full relative overflow-hidden"
+                      style={{
+                        '--bar-target': cfg.priorityFill,
+                        background: cfg.priorityGradient,
+                        animationDelay: `${500 + i * 120}ms`,
+                      } as React.CSSProperties}
+                    >
+                      <div className="suggestion-bar-shimmer absolute inset-0" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)' }} />
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-semibold text-slate-400 dark:text-zinc-500">{cfg.priorityLabel}</span>
                 </div>
-              ) : isApplied ? (
-                <div className="flex items-center gap-1 flex-shrink-0">
-                  <svg className="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 8l3.5 3.5L13 5" />
-                  </svg>
-                  <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">Applied</span>
-                </div>
-              ) : (
-                <button
-                  onClick={e => handleRowCTA(e, suggestion)}
-                  className="flex-shrink-0 px-3 py-1.5 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[11px] font-medium rounded-md hover:bg-slate-700 dark:hover:bg-white active:bg-slate-800 dark:active:bg-zinc-200 transition-colors whitespace-nowrap"
-                >
-                  {suggestion.actionLabel}
-                </button>
-              )}
+
+                {/* CTA row */}
+                {isApplying ? (
+                  <div className="flex items-center gap-1.5">
+                    <svg className="w-4 h-4 animate-spin text-slate-400" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    <span className="text-[13px] text-slate-400">Applying…</span>
+                  </div>
+                ) : isApplied ? (
+                  <div className="flex items-center gap-1.5">
+                    <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 8l3.5 3.5L13 5" />
+                    </svg>
+                    <span className="text-[13px] font-medium text-emerald-600 dark:text-emerald-400">Applied</span>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={e => handleRowCTA(e, suggestion)}
+                      className="flex-1 text-[14px] font-normal bg-slate-800 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl py-[11px] px-4 hover:bg-slate-900 dark:hover:bg-white active:bg-slate-950 dark:active:bg-zinc-200 transition-colors"
+                    >
+                      {suggestion.actionLabel}
+                    </button>
+                    <button
+                      onClick={e => handleDetails(e, suggestion)}
+                      className="text-[13px] font-normal text-slate-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700 rounded-xl py-[11px] px-4 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.14] dark:hover:border-zinc-600 transition-colors"
+                    >
+                      Details
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )
         })}
@@ -302,7 +407,7 @@ export default function PlanningSuggestions() {
         {hasMore && (
           <button
             onClick={() => setShowAll(v => !v)}
-            className="flex items-center justify-center gap-1 w-full py-2.5 text-[11px] font-medium text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors rounded-b-lg"
+            className="flex items-center justify-center gap-1 w-full py-2.5 text-[11px] font-medium text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 transition-colors"
           >
             {showAll ? 'Show less' : `Show ${stateSuggestions.length - VISIBLE_COUNT} more`}
             <svg className={`w-3 h-3 transition-transform ${showAll ? 'rotate-180' : ''}`} viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

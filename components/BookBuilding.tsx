@@ -23,79 +23,52 @@ function buildBookBuildingSteps(connectedApps: string[]): string[] {
 type Category = BookBuildingItem['category']
 
 const CATEGORY_CONFIG: Record<Category, {
-  boxBg: string
-  boxBorder: string
-  iconColor: string
   badgeClasses: string
   badgeLabel: string
-  icon: React.ReactNode
+  glowColor: string
+  priorityFill: string
+  priorityGradient: string
+  priorityLabel: string
 }> = {
   gap: {
-    boxBg: 'bg-red-50',
-    boxBorder: 'border-red-200',
-    iconColor: 'text-red-500',
-    badgeClasses: 'bg-red-50 border border-red-200 text-red-700',
+    badgeClasses: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-950/40 dark:border-red-800 dark:text-red-400',
     badgeLabel: 'Gap detected',
-    icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <circle cx="8" cy="8" r="6" />
-        <path d="M8 5v3.5" />
-        <circle cx="8" cy="11" r="0.5" fill="currentColor" stroke="none" />
-      </svg>
-    ),
+    glowColor: 'rgba(239,68,68,0.07)',
+    priorityFill: '85%',
+    priorityGradient: 'linear-gradient(90deg, #D3222A, #f97316)',
+    priorityLabel: 'High priority',
   },
   overdue: {
-    boxBg: 'bg-amber-50',
-    boxBorder: 'border-amber-200',
-    iconColor: 'text-amber-500',
-    badgeClasses: 'bg-amber-50 border border-amber-200 text-amber-700',
+    badgeClasses: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-950/40 dark:border-red-800 dark:text-red-400',
     badgeLabel: 'Overdue',
-    icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <circle cx="8" cy="8" r="6" />
-        <path d="M8 5v3l2 2" />
-      </svg>
-    ),
+    glowColor: 'rgba(239,68,68,0.07)',
+    priorityFill: '85%',
+    priorityGradient: 'linear-gradient(90deg, #D3222A, #f97316)',
+    priorityLabel: 'High priority',
   },
   assignment: {
-    boxBg: 'bg-amber-50',
-    boxBorder: 'border-amber-200',
-    iconColor: 'text-amber-500',
-    badgeClasses: 'bg-amber-50 border border-amber-200 text-amber-700',
+    badgeClasses: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-950/40 dark:border-amber-800 dark:text-amber-400',
     badgeLabel: 'Needs assignment',
-    icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <circle cx="8" cy="5.5" r="2.5" />
-        <path d="M3 13c0-2.761 2.239-5 5-5s5 2.239 5 5" />
-        <path d="M11.5 3v3M13 4.5h-3" />
-      </svg>
-    ),
+    glowColor: 'rgba(245,158,11,0.07)',
+    priorityFill: '55%',
+    priorityGradient: 'linear-gradient(90deg, #f59e0b, #eab308)',
+    priorityLabel: 'Medium',
   },
   signature: {
-    boxBg: 'bg-slate-100',
-    boxBorder: 'border-slate-300',
-    iconColor: 'text-slate-500',
-    badgeClasses: 'bg-slate-100 border border-slate-300 text-slate-600',
+    badgeClasses: 'bg-slate-100 border-slate-300 text-slate-600 dark:bg-zinc-800 dark:border-zinc-600 dark:text-zinc-400',
     badgeLabel: 'Awaiting signatures',
-    icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-        <path d="M3 12l3-1 6-6-2-2-6 6-1 3z" />
-        <path d="M11 3l2 2" />
-      </svg>
-    ),
+    glowColor: 'rgba(148,163,184,0.05)',
+    priorityFill: '35%',
+    priorityGradient: 'linear-gradient(90deg, #94a3b8, #cbd5e1)',
+    priorityLabel: 'Low',
   },
   approval: {
-    boxBg: 'bg-slate-100',
-    boxBorder: 'border-slate-300',
-    iconColor: 'text-slate-500',
-    badgeClasses: 'bg-slate-100 border border-slate-300 text-slate-600',
+    badgeClasses: 'bg-slate-100 border-slate-300 text-slate-600 dark:bg-zinc-800 dark:border-zinc-600 dark:text-zinc-400',
     badgeLabel: 'Awaiting approval',
-    icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="8" cy="8" r="6" />
-        <path d="M5 8l2.5 2.5L11 5.5" />
-      </svg>
-    ),
+    glowColor: 'rgba(148,163,184,0.05)',
+    priorityFill: '35%',
+    priorityGradient: 'linear-gradient(90deg, #94a3b8, #cbd5e1)',
+    priorityLabel: 'Low',
   },
 }
 
@@ -144,7 +117,7 @@ function BookBuildingModal({ item, onClose }: { item: BookBuildingItem; onClose:
             </div>
           </div>
 
-          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide ${cfg.badgeClasses}`}>
+          <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold border ${cfg.badgeClasses}`}>
             {cfg.badgeLabel}
           </span>
 
@@ -213,6 +186,11 @@ export default function BookBuilding() {
     }, 30_000)
   }
 
+  function handleDetails(e: React.MouseEvent, item: BookBuildingItem) {
+    e.stopPropagation()
+    setSelectedItem(item)
+  }
+
   const stateItems = BOOK_BUILDING_ITEMS.filter(i => i.states.includes(state))
   const visibleItems = showAll ? stateItems : stateItems.slice(0, VISIBLE_COUNT)
   const hasMore = stateItems.length > VISIBLE_COUNT
@@ -220,7 +198,7 @@ export default function BookBuilding() {
   return (
     <section className="flex flex-col">
       <div className="mb-3">
-        <h2 className="text-xs font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-wide">
+        <h2 className="text-[11px] font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-wide">
           Book Building
         </h2>
         <p className="text-xs text-slate-500 dark:text-zinc-500 mt-0.5">
@@ -228,66 +206,100 @@ export default function BookBuilding() {
         </p>
       </div>
 
-      <div className="flex-1 rounded-lg border border-slate-200 dark:border-zinc-700 divide-y divide-slate-100 dark:divide-zinc-800 flex flex-col">
+      <div className="space-y-3">
         {visibleItems.map((item, i) => {
           const cfg = CATEGORY_CONFIG[item.category]
+          const entity = ENTITIES.find(e => e.id === item.entityId)!
           const status = itemStatus[item.id]
           const isApplying = status === 'applying'
           const isApplied = status === 'applied'
-          const isFirst = i === 0
-          const isLast = !hasMore && i === visibleItems.length - 1
 
           return (
             <div
               key={item.id}
               onClick={isApplying ? undefined : () => setSelectedItem(item)}
-              className={`flex items-center gap-3 px-4 py-3 min-h-[64px] overflow-hidden transition-colors cursor-pointer
-                ${isFirst ? 'rounded-t-lg' : ''}
-                ${isLast ? 'rounded-b-lg' : ''}
-                ${isApplying
-                  ? 'bg-slate-50 dark:bg-zinc-800 cursor-default'
-                  : 'bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 active:bg-slate-100 dark:active:bg-zinc-700'
-                }`}
+              className="suggestion-card relative rounded-[20px] border border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden cursor-pointer transition-all duration-300 hover:border-black/[0.14] dark:hover:border-zinc-600 hover:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
+              style={{ animationDelay: `${i * 120}ms` } as React.CSSProperties}
             >
-              {/* Category icon box */}
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border ${cfg.boxBg} ${cfg.boxBorder} ${cfg.iconColor} ${isApplying || isApplied ? 'opacity-40' : ''}`}>
-                {cfg.icon}
-              </div>
+              {/* Breathing glow */}
+              <div
+                className="suggestion-card-glow absolute top-0 left-0 right-0 h-20 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse 80% 100% at 50% 0%, ${cfg.glowColor} 0%, transparent 100%)` }}
+              />
 
-              {/* Text */}
-              <div className={`flex-1 min-w-0 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
-                <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100 leading-snug line-clamp-2">
+              <div className={`relative p-[22px_24px] ${isApplying ? 'cursor-default' : ''}`}>
+                {/* Entity row */}
+                <div className={`flex items-center gap-2.5 mb-3.5 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
+                  <EntityLogo entity={entity} size="md" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-semibold text-slate-900 dark:text-zinc-100">{entity.name}</p>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-normal">{entity.country} · Board: {entity.nextBoard}</p>
+                  </div>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold border whitespace-nowrap flex-shrink-0 ${cfg.badgeClasses}`}>
+                    {cfg.badgeLabel}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <p className={`text-[16px] font-semibold text-slate-900 dark:text-zinc-100 leading-[1.35] mb-2 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
                   {item.title}
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-zinc-500 mt-0.5 leading-snug truncate">
-                  {item.meta}
-                </p>
-              </div>
 
-              {/* CTA / status */}
-              {isApplying ? (
-                <div className="flex items-center gap-1.5 flex-shrink-0">
-                  <svg className="w-3.5 h-3.5 animate-spin text-slate-400" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                  </svg>
-                  <span className="text-[11px] text-slate-400">Applying…</span>
+                {/* Detail — always visible */}
+                <p className={`text-[13px] text-slate-500 dark:text-zinc-400 leading-relaxed ${isApplying || isApplied ? 'opacity-40' : ''}`}>
+                  {item.detail}
+                </p>
+
+                {/* Priority bar */}
+                <div className={`flex items-center gap-2 mt-4 mb-4 ${isApplying || isApplied ? 'opacity-40' : ''}`}>
+                  <div className="flex-1 h-1 rounded-full bg-slate-100 dark:bg-zinc-800 overflow-hidden">
+                    <div
+                      className="suggestion-bar-fill h-full rounded-full relative overflow-hidden"
+                      style={{
+                        '--bar-target': cfg.priorityFill,
+                        background: cfg.priorityGradient,
+                        animationDelay: `${500 + i * 120}ms`,
+                      } as React.CSSProperties}
+                    >
+                      <div className="suggestion-bar-shimmer absolute inset-0" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)' }} />
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-semibold text-slate-400 dark:text-zinc-500">{cfg.priorityLabel}</span>
                 </div>
-              ) : isApplied ? (
-                <div className="flex items-center gap-1 flex-shrink-0">
-                  <svg className="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 8l3.5 3.5L13 5" />
-                  </svg>
-                  <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">Done</span>
-                </div>
-              ) : (
-                <button
-                  onClick={e => handleCTA(e, item)}
-                  className="flex-shrink-0 px-3 py-1.5 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[11px] font-medium rounded-md hover:bg-slate-700 dark:hover:bg-white active:bg-slate-800 dark:active:bg-zinc-200 transition-colors whitespace-nowrap"
-                >
-                  {item.actionLabel}
-                </button>
-              )}
+
+                {/* CTA row */}
+                {isApplying ? (
+                  <div className="flex items-center gap-1.5">
+                    <svg className="w-4 h-4 animate-spin text-slate-400" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    <span className="text-[13px] text-slate-400">Applying…</span>
+                  </div>
+                ) : isApplied ? (
+                  <div className="flex items-center gap-1.5">
+                    <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 8l3.5 3.5L13 5" />
+                    </svg>
+                    <span className="text-[13px] font-medium text-emerald-600 dark:text-emerald-400">Done</span>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={e => handleCTA(e, item)}
+                      className="flex-1 text-[14px] font-normal bg-slate-800 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl py-[11px] px-4 hover:bg-slate-900 dark:hover:bg-white active:bg-slate-950 dark:active:bg-zinc-200 transition-colors"
+                    >
+                      {item.actionLabel}
+                    </button>
+                    <button
+                      onClick={e => handleDetails(e, item)}
+                      className="text-[13px] font-normal text-slate-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700 rounded-xl py-[11px] px-4 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.14] dark:hover:border-zinc-600 transition-colors"
+                    >
+                      Details
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )
         })}
@@ -295,7 +307,7 @@ export default function BookBuilding() {
         {hasMore && (
           <button
             onClick={() => setShowAll(v => !v)}
-            className="flex items-center justify-center gap-1 w-full py-2.5 text-[11px] font-medium text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors rounded-b-lg"
+            className="flex items-center justify-center gap-1 w-full py-2.5 text-[11px] font-medium text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 transition-colors"
           >
             {showAll ? 'Show less' : `Show ${stateItems.length - VISIBLE_COUNT} more`}
             <svg className={`w-3 h-3 transition-transform ${showAll ? 'rotate-180' : ''}`} viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
