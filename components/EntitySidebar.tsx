@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { ACTION_ITEMS, type Entity, type ChatMessage } from '@/components/data'
+import { BOOK_BUILDING_ITEMS, type Entity, type ChatMessage } from '@/components/data'
 
 function getEntityMessages(entity: Entity): ChatMessage[] {
   const histories: Record<number, ChatMessage[]> = {
@@ -100,7 +100,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
 }
 
 export default function EntitySidebar({ entity }: { entity: Entity }) {
-  const activeItem = ACTION_ITEMS.find(item => item.entityName === entity.name) ?? null
+  const activeItem = BOOK_BUILDING_ITEMS.find(item => item.entityId === entity.id) ?? null
   const [messages, setMessages] = useState<ChatMessage[]>(getEntityMessages(entity))
   const [inputValue, setInputValue] = useState('')
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -141,7 +141,7 @@ export default function EntitySidebar({ entity }: { entity: Entity }) {
             <span className="mt-0.5 flex-shrink-0 w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
             <div className="min-w-0">
               <p className="text-xs font-medium text-slate-700 dark:text-zinc-300 leading-snug">{activeItem.title}</p>
-              <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5 leading-snug">{activeItem.description}</p>
+              <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5 leading-snug">{activeItem.detail}</p>
             </div>
           </div>
         ) : (

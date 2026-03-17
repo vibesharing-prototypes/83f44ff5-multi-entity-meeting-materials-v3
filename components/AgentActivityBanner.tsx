@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ACTION_ITEMS } from '@/components/data'
+import { BOOK_BUILDING_ITEMS } from '@/components/data'
 import { useProtoState } from '@/components/ProtoStateContext'
 import { useAgentActivity, type AgentJob } from '@/components/AgentActivityContext'
 
@@ -234,7 +234,7 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
                     ? 'bg-rose-50 dark:bg-rose-950/50 border-2 border-rose-400 dark:border-rose-600'
                     : isCurrent
                     ? 'bg-amber-400 dark:bg-amber-500'
-                    : 'bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700'
+                    : 'bg-white dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700'
                 }`}>
                   {isComplete && (
                     <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -253,7 +253,7 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
                 </div>
               </div>
               {i < steps.length - 1 && (
-                <div className="flex-1 h-px mx-2 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                <div className="flex-1 h-px mx-2 bg-slate-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-700 ease-out ${
                       i < completedCount ? 'bg-emerald-400 dark:bg-emerald-500' : 'bg-transparent'
@@ -280,7 +280,7 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
             >
               Stop
             </button>
-            <span className="text-[10px] text-slate-400 dark:text-zinc-700 tabular-nums">
+            <span className="text-[10px] text-slate-500 dark:text-zinc-600 tabular-nums">
               {Math.min(completedCount + 1, steps.length)}/{steps.length}
             </span>
           </div>
@@ -298,14 +298,14 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
               </span>
               <button
                 onClick={() => setShowDetails(v => !v)}
-                className="text-[11px] text-slate-400 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-zinc-300 underline underline-offset-2 transition-colors"
+                className="text-[11px] text-slate-500 dark:text-zinc-400 hover:text-slate-600 dark:hover:text-zinc-300 underline underline-offset-2 transition-colors"
               >
                 {showDetails ? 'Hide details' : 'Show details'}
               </button>
             </div>
             <button
               onClick={onDismiss}
-              className="text-[11px] text-slate-400 dark:text-zinc-600 hover:text-slate-600 dark:hover:text-zinc-400 transition-colors"
+              className="text-[11px] text-slate-500 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-zinc-400 transition-colors"
             >
               Dismiss
             </button>
@@ -317,7 +317,7 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
             >
               Resume from here
             </button>
-            <span className="text-[10px] text-slate-300 dark:text-zinc-800">·</span>
+            <span className="text-[10px] text-slate-400 dark:text-zinc-700">·</span>
             <button
               onClick={handleRestart}
               className="text-[11px] text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200 underline underline-offset-2 transition-colors"
@@ -347,7 +347,7 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
                       ? 'text-slate-500 dark:text-zinc-400'
                       : i === stoppedAtStep
                       ? 'text-rose-500 dark:text-rose-400'
-                      : 'text-slate-400 dark:text-zinc-700'
+                      : 'text-slate-500 dark:text-zinc-600'
                   }>
                     {step}
                   </span>
@@ -369,14 +369,14 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
               </span>
               <button
                 onClick={() => setShowDetails(v => !v)}
-                className="text-[11px] text-slate-400 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-zinc-300 underline underline-offset-2 transition-colors"
+                className="text-[11px] text-slate-500 dark:text-zinc-400 hover:text-slate-600 dark:hover:text-zinc-300 underline underline-offset-2 transition-colors"
               >
                 {showDetails ? 'Hide details' : 'Show details'}
               </button>
             </div>
             <button
               onClick={onDismiss}
-              className="text-[11px] text-slate-400 dark:text-zinc-600 hover:text-slate-600 dark:hover:text-zinc-400 transition-colors"
+              className="text-[11px] text-slate-500 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-zinc-400 transition-colors"
             >
               Dismiss
             </button>
@@ -402,7 +402,7 @@ function AgentProgressWidget({ job, onDismiss }: { job: AgentJob; onDismiss: () 
 export default function AgentActivityBanner() {
   const state = useProtoState()
   const cfg = CONFIGS[state]
-  const items = ACTION_ITEMS.filter(i => i.states.includes(state))
+  const items = BOOK_BUILDING_ITEMS.filter(i => i.states.includes(state))
   const total = items.length
 
   const agentActivity = useAgentActivity()
@@ -416,26 +416,26 @@ export default function AgentActivityBanner() {
   }))
 
   return (
-    <div className={`relative rounded-2xl border overflow-hidden bg-white dark:bg-[#0b0d10] ${cfg.cardBorder}`}>
+    <div className="relative">
       {/* Glow overlay */}
       <div className={`hero-glow ${cfg.glowClass}`} aria-hidden />
 
       <div className="relative px-8 pt-8 pb-7">
         {/* Status pill */}
         <div className="flex justify-center mb-5">
-          <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${cfg.pillText} ${cfg.pillBorder} ${cfg.pillBg}`}>
+          <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-[11px] font-semibold tracking-[0.04em] ${cfg.pillText} ${cfg.pillBorder} ${cfg.pillBg}`}>
             <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${cfg.pillDot}`} />
             {cfg.pillLabel}
           </span>
         </div>
 
         {/* Headline */}
-        <h2 className="text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight mb-3">
+        <h2 className="text-center text-[2.5rem] font-light tracking-[-0.02em] text-slate-900 dark:text-white leading-[1.15] mb-3">
           {headline}
         </h2>
 
         {/* Subtext */}
-        <p className="text-center text-sm text-slate-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-7">
+        <p className="text-center text-[13px] text-slate-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-7">
           {cfg.subtext}
         </p>
 
@@ -453,7 +453,7 @@ export default function AgentActivityBanner() {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-slate-100 dark:bg-zinc-800 mb-5" />
+        <div className="h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-zinc-700 mb-5" />
 
         {/* Bottom section: progress widget or static workflow */}
         {activeJob ? (
@@ -463,7 +463,7 @@ export default function AgentActivityBanner() {
           />
         ) : cfg.workflow ? (
           <div className="flex flex-col items-center gap-3">
-            <span className="text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-zinc-600">
+            <span className="text-[10px] font-semibold tracking-[0.1em] uppercase text-slate-400 dark:text-zinc-600">
               Response Workflow
             </span>
             <div className="flex items-center gap-1.5 flex-wrap justify-center">
@@ -503,7 +503,7 @@ export default function AgentActivityBanner() {
             </div>
           </div>
         ) : (
-          <p className="text-center text-xs text-slate-500 dark:text-zinc-600">
+          <p className="text-center text-[11px] tracking-[0.04em] text-slate-400 dark:text-zinc-600">
             No items require review. Agents are running normally.
           </p>
         )}
