@@ -73,12 +73,10 @@ function LogoStack({ entityIds }: { entityIds: number[] }) {
 
 function PlanningSuggestionModal({
   suggestion,
-  isApplied,
   onApply,
   onClose,
 }: {
   suggestion: PlanningSuggestion
-  isApplied: boolean
   onApply: () => void
   onClose: () => void
 }) {
@@ -162,21 +160,12 @@ function PlanningSuggestionModal({
           <button onClick={onClose} className="text-sm text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">
             Cancel
           </button>
-          {isApplied ? (
-            <div className="flex items-center gap-1.5 text-sm font-medium text-emerald-600 dark:text-emerald-400">
-              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 8l3.5 3.5L13 5" />
-              </svg>
-              Changes applied
-            </div>
-          ) : (
-            <button
-              onClick={() => { onApply(); onClose() }}
-              className="px-4 py-2 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium rounded-lg hover:bg-slate-700 dark:hover:bg-white active:bg-slate-800 dark:active:bg-zinc-200 transition-colors"
-            >
-              {suggestion.actionLabel}
-            </button>
-          )}
+          <button
+            onClick={() => { onApply(); onClose() }}
+            className="px-4 py-2 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium rounded-lg hover:bg-slate-700 dark:hover:bg-white active:bg-slate-800 dark:active:bg-zinc-200 transition-colors"
+          >
+            {suggestion.actionLabel}
+          </button>
         </div>
       </div>
     </div>
@@ -326,7 +315,6 @@ export default function PlanningSuggestions() {
       {selectedSuggestion && (
         <PlanningSuggestionModal
           suggestion={selectedSuggestion}
-          isApplied={cardStatus[selectedSuggestion.id] === 'applied'}
           onApply={() => handleApply(selectedSuggestion)}
           onClose={() => setSelectedSuggestion(null)}
         />
