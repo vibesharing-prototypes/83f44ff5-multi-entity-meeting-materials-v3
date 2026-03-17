@@ -90,9 +90,9 @@ export default function AgentUsecaseHeroes() {
   return (
     <div className="mt-12 mb-6">
       <div className="flex items-center gap-3 mb-7">
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-zinc-800" />
-        <span className="text-[10px] font-semibold tracking-[0.18em] text-slate-400 dark:text-zinc-600 uppercase">What agents can do for you</span>
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-zinc-800" />
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-zinc-700" />
+        <span className="text-[10px] font-semibold tracking-[0.18em] text-slate-500 dark:text-zinc-500 uppercase">What agents can do for you</span>
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-zinc-700" />
       </div>
 
       <div className="grid grid-cols-3 gap-5">

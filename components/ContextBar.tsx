@@ -87,7 +87,7 @@ export default function ContextBar({ currentEntityId }: ContextBarProps) {
   const approved = ENTITIES.filter(e => e.completion >= 96).length
 
   return (
-    <div className="border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900 flex-shrink-0">
+    <div className="border-b border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex-shrink-0">
       {/* Header strip */}
       <div className="px-6 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-5">

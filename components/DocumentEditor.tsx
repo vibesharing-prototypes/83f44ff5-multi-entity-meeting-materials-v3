@@ -372,7 +372,7 @@ export default function DocumentEditor({
   }
 
   return (
-    <div className="h-screen flex flex-col bg-white dark:bg-zinc-950 overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#f0f0f1] dark:bg-zinc-950 overflow-hidden">
 
       {/* Top navigation bar */}
       <header className="flex-shrink-0 flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
