@@ -235,8 +235,8 @@
       <div class="pp-group">
         <span class="pp-group-label">THEME</span>
         <div class="pp-pill pp-theme-pill">
-          <button class="pp-btn pp-active" data-pp-theme="dark">DARK</button>
-          <button class="pp-btn"           data-pp-theme="light">LIGHT</button>
+          <button class="pp-btn pp-active" data-pp-theme="light">LIGHT</button>
+          <button class="pp-btn"           data-pp-theme="dark">DARK</button>
         </div>
       </div>
       <div class="pp-divider"></div>` : '';
@@ -315,7 +315,7 @@
 
     // ── Theme toggle ───────────────────────────────────────────────────────────
     if (cfg.themeToggle) {
-      let currentTheme = 'dark';
+      let currentTheme = 'light';
       bar.querySelectorAll('[data-pp-theme]').forEach(btn => {
         btn.addEventListener('click', e => {
           e.stopPropagation();
