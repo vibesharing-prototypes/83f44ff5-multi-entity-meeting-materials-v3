@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { PLANNING_SUGGESTIONS, ENTITIES, type PlanningSuggestion } from '@/components/data'
 import EntityLogo from '@/components/EntityLogo'
+import ConfirmActionModal from '@/components/ConfirmActionModal'
 import { useAgentActivity } from '@/components/AgentActivityContext'
 import { useProtoState } from '@/components/ProtoStateContext'
 
@@ -219,6 +220,7 @@ const VISIBLE_COUNT = 3
 export default function PlanningSuggestions() {
   const [cardStatus, setCardStatus] = useState<Record<number, CardStatus>>({})
   const [selectedSuggestion, setSelectedSuggestion] = useState<PlanningSuggestion | null>(null)
+  const [confirmSuggestion, setConfirmSuggestion] = useState<PlanningSuggestion | null>(null)
   const [showAll, setShowAll] = useState(false)
   const agentActivity = useAgentActivity()
   const state = useProtoState()
@@ -232,7 +234,7 @@ export default function PlanningSuggestions() {
       ? agentActivity.addJob({
           type: 'edit',
           entityId: entity.id,
-          entityShortName: entity.shortName,
+          entityShortName: suggestion.entities.length > 1 ? `${suggestion.entities.length} entities` : entity.shortName,
           title: suggestion.title,
           sectionTitle: suggestion.affectedSection,
           workflowSteps: buildEditSteps(entity.connectedApps, suggestion.affectedSection ?? ''),
@@ -246,7 +248,7 @@ export default function PlanningSuggestions() {
 
   function handleRowCTA(e: React.MouseEvent, suggestion: PlanningSuggestion) {
     e.stopPropagation()
-    handleApply(suggestion)
+    setConfirmSuggestion(suggestion)
   }
 
   function handleDetails(e: React.MouseEvent, suggestion: PlanningSuggestion) {
@@ -424,6 +426,24 @@ export default function PlanningSuggestions() {
           onClose={() => setSelectedSuggestion(null)}
         />
       )}
+
+      {confirmSuggestion && (() => {
+        const cfg = SOURCE_CONFIG[confirmSuggestion.sourceType]
+        return (
+          <ConfirmActionModal
+            entityIds={confirmSuggestion.entities.map(e => e.entityId)}
+            title={confirmSuggestion.title}
+            description={confirmSuggestion.reason}
+            affectedSection={confirmSuggestion.affectedSection}
+            proposedEdit={confirmSuggestion.suggestedPrompt}
+            actionLabel={confirmSuggestion.actionLabel}
+            badgeLabel={confirmSuggestion.sourceLabel}
+            badgeClasses={cfg.badgeClasses}
+            onConfirm={() => handleApply(confirmSuggestion)}
+            onClose={() => setConfirmSuggestion(null)}
+          />
+        )
+      })()}
     </section>
   )
 }

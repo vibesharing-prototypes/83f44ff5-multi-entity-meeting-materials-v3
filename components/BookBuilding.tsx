@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { BOOK_BUILDING_ITEMS, ENTITIES, type BookBuildingItem } from '@/components/data'
 import EntityLogo from '@/components/EntityLogo'
+import ConfirmActionModal from '@/components/ConfirmActionModal'
 import { useAgentActivity } from '@/components/AgentActivityContext'
 import { useProtoState } from '@/components/ProtoStateContext'
 
@@ -167,13 +168,13 @@ const VISIBLE_COUNT = 3
 
 export default function BookBuilding() {
   const [selectedItem, setSelectedItem] = useState<BookBuildingItem | null>(null)
+  const [confirmItem, setConfirmItem] = useState<BookBuildingItem | null>(null)
   const [itemStatus, setItemStatus] = useState<Record<number, ItemStatus>>({})
   const [showAll, setShowAll] = useState(false)
   const state = useProtoState()
   const agentActivity = useAgentActivity()
 
-  function handleCTA(e: React.MouseEvent, item: BookBuildingItem) {
-    e.stopPropagation()
+  function executeApply(item: BookBuildingItem) {
     const itemEntities = item.entityIds.map(id => ENTITIES.find(en => en.id === id)!).filter(Boolean)
     const entity = itemEntities[0]
     if (!entity || !agentActivity) return
@@ -190,6 +191,11 @@ export default function BookBuilding() {
       setItemStatus(prev => ({ ...prev, [item.id]: 'applied' }))
       agentActivity.completeJob(jobId)
     }, 30_000)
+  }
+
+  function handleCTA(e: React.MouseEvent, item: BookBuildingItem) {
+    e.stopPropagation()
+    setConfirmItem(item)
   }
 
   function handleDetails(e: React.MouseEvent, item: BookBuildingItem) {
@@ -328,6 +334,22 @@ export default function BookBuilding() {
       {selectedItem && (
         <BookBuildingModal item={selectedItem} onClose={() => setSelectedItem(null)} />
       )}
+
+      {confirmItem && (() => {
+        const cfg = CATEGORY_CONFIG[confirmItem.category]
+        return (
+          <ConfirmActionModal
+            entityIds={confirmItem.entityIds}
+            title={confirmItem.title}
+            description={confirmItem.detail}
+            actionLabel={confirmItem.actionLabel}
+            badgeLabel={cfg.badgeLabel}
+            badgeClasses={cfg.badgeClasses}
+            onConfirm={() => executeApply(confirmItem)}
+            onClose={() => setConfirmItem(null)}
+          />
+        )
+      })()}
     </section>
   )
 }
