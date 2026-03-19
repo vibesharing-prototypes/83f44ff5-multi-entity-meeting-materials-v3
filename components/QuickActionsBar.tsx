@@ -221,16 +221,16 @@ export default function QuickActionsBar() {
           <button
             key={action.id}
             onClick={() => setConfirmAction(action)}
-            className="flex-1 min-w-0 flex items-center gap-3 h-[64px] px-4 bg-white dark:bg-zinc-800 border border-black/[0.08] dark:border-zinc-700 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.14] dark:hover:border-zinc-600 hover:shadow-sm active:scale-[0.99] transition-all group"
+            className="flex-1 min-w-0 flex items-center gap-3 h-[64px] px-4 bg-white dark:bg-zinc-800 border border-black/[0.08] dark:border-zinc-700 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.18] dark:hover:border-zinc-500 hover:shadow-[0_4px_16px_rgba(0,0,0,0.09)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all group"
           >
-            <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-50 dark:bg-zinc-700 flex items-center justify-center group-hover:bg-white dark:group-hover:bg-zinc-600 transition-colors">
-              <span className="text-slate-500 dark:text-zinc-300">{action.icon}</span>
+            <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-50 dark:bg-zinc-700 flex items-center justify-center group-hover:bg-slate-100 dark:group-hover:bg-zinc-600 transition-colors">
+              <span className="text-slate-500 dark:text-zinc-300 group-hover:text-slate-700 dark:group-hover:text-zinc-100 transition-colors">{action.icon}</span>
             </div>
             <div className="min-w-0">
-              <p className="text-[13px] font-semibold text-slate-800 dark:text-zinc-100 leading-snug truncate">
+              <p className="text-[13px] font-semibold text-slate-800 group-hover:text-slate-900 dark:text-zinc-100 leading-snug truncate transition-colors">
                 {action.label}
               </p>
-              <p className="text-[11px] text-slate-400 dark:text-zinc-500 leading-snug truncate">
+              <p className="text-[11px] text-slate-400 group-hover:text-slate-500 dark:text-zinc-500 leading-snug truncate transition-colors">
                 {action.sublabel}
               </p>
             </div>
