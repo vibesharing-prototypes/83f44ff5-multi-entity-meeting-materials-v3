@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { BOOK_BUILDING_ITEMS, ENTITIES, type BookBuildingItem } from '@/components/data'
 import EntityLogo from '@/components/EntityLogo'
 import ConfirmActionModal from '@/components/ConfirmActionModal'
-import QuickActionsBar from '@/components/QuickActionsBar'
 import { useAgentActivity } from '@/components/AgentActivityContext'
 import { useProtoState } from '@/components/ProtoStateContext'
 
@@ -217,10 +216,6 @@ export default function BookBuilding() {
         <p className="text-xs text-slate-500 dark:text-zinc-500 mt-0.5">
           Gaps and missing items detected in your board packs.
         </p>
-      </div>
-
-      <div className="mb-3">
-        <QuickActionsBar />
       </div>
 
       <div className="space-y-3">

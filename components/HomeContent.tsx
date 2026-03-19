@@ -6,6 +6,7 @@ import { AgentActivityProvider } from '@/components/AgentActivityContext'
 import AgentActivityBanner from '@/components/AgentActivityBanner'
 import BookBuilding from '@/components/BookBuilding'
 import PlanningSuggestions from '@/components/PlanningSuggestions'
+import QuickActionsBar from '@/components/QuickActionsBar'
 import AgentUsecaseHeroes from '@/components/AgentUsecaseHeroes'
 import Footer from '@/components/Footer'
 import { ProtoStateProvider } from '@/components/ProtoStateContext'
@@ -24,6 +25,9 @@ export default function HomeContent() {
         <div className="flex-1 overflow-y-auto px-6 py-4 home-gradient">
           <div className="mb-6">
             <AgentActivityBanner />
+          </div>
+          <div className="mb-4">
+            <QuickActionsBar />
           </div>
           <div className="flex flex-col gap-6">
             <BookBuilding />
