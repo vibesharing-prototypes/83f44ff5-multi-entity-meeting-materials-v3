@@ -204,7 +204,8 @@ This is the dominant UI pattern. Cards have a rich set of states.
 // Pending
 "suggestion-card relative rounded-[20px] border border-black/[0.09] dark:border-zinc-700
  bg-white dark:bg-zinc-900 overflow-hidden cursor-pointer transition-all duration-300
- hover:border-black/[0.14] hover:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
+ hover:bg-slate-50 hover:border-slate-200 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)]
+ hover:-translate-y-0.5 [will-change:transform] [backface-visibility:hidden]"
 
 // Applied
 "border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/10 cursor-default"
@@ -279,7 +280,7 @@ className="text-[13px] font-normal text-slate-500 dark:text-zinc-400
   bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700
   rounded-xl py-[11px] px-4
   hover:bg-slate-50 dark:hover:bg-zinc-700
-  hover:border-black/[0.14] transition-colors"
+  hover:border-slate-200 dark:hover:border-zinc-600 transition-colors"
 ```
 
 ### Text / Ghost (cancel, dismiss)
@@ -405,7 +406,7 @@ Apply inline via `style={{ animation: 'confirmModalIn 220ms cubic-bezier(0.22,1,
 The signature easing throughout the project is **`cubic-bezier(0.22, 1, 0.36, 1)`** — a fast ease-out that overshoots slightly. Use it for modals, pop animations, and dropdowns.
 
 ### Tailwind Transitions
-Most interactive elements use Tailwind's `transition-all` or `transition-colors` with the default 150ms. The card hover lift uses `duration-300`. The stepper line fill uses `duration-700 ease-out`.
+Most interactive elements use `transition-colors` with the default 150ms. Cards and action tiles use `transition-[transform,box-shadow,border-color,background-color] duration-[250ms] ease-out` for smooth hover lifts. Add `[will-change:transform] [backface-visibility:hidden]` to any element using `hover:-translate-y-*` to prevent text jumping during GPU layer promotion. The stepper line fill uses `duration-700 ease-out`.
 
 ---
 

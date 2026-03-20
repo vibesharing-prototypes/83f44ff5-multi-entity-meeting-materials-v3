@@ -432,20 +432,8 @@ export default function DocumentEditor({
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* Document editor area */}
-        <main className="flex-1 overflow-y-auto bg-slate-100 dark:bg-zinc-800 p-8">
-          <div
-            contentEditable
-            suppressContentEditableWarning
-            onInput={() => setHasUnsaved(true)}
-            className="max-w-3xl mx-auto bg-white dark:bg-zinc-900 shadow-sm dark:shadow-none rounded-xl p-10 min-h-[700px] outline-none focus:ring-2 focus:ring-blue-200 dark:focus:ring-zinc-700 focus:ring-offset-4 dark:focus:ring-offset-zinc-800 cursor-text transition-shadow"
-          >
-            <SectionEditorContent type={section.type} entity={entity} />
-          </div>
-        </main>
-
         {/* AI assistant sidebar */}
-        <aside className="w-80 flex-shrink-0 border-l border-slate-200 dark:border-zinc-800 flex flex-col bg-white dark:bg-zinc-900">
+        <aside className="w-80 flex-shrink-0 border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-white dark:bg-zinc-900">
           <div className="px-4 py-3 border-b border-slate-200 dark:border-zinc-800 flex-shrink-0">
             <h2 className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wide">AI Assistant</h2>
             <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5">Editing: {section.title}</p>
@@ -495,6 +483,18 @@ export default function DocumentEditor({
             </div>
           </div>
         </aside>
+
+        {/* Document preview area */}
+        <main className="flex-1 overflow-y-auto bg-slate-100 dark:bg-zinc-800 p-8">
+          <div
+            contentEditable
+            suppressContentEditableWarning
+            onInput={() => setHasUnsaved(true)}
+            className="max-w-3xl mx-auto bg-white dark:bg-zinc-900 shadow-sm dark:shadow-none rounded-xl p-10 min-h-[700px] outline-none focus:ring-2 focus:ring-blue-200 dark:focus:ring-zinc-700 focus:ring-offset-4 dark:focus:ring-offset-zinc-800 cursor-text transition-shadow"
+          >
+            <SectionEditorContent type={section.type} entity={entity} />
+          </div>
+        </main>
       </div>
 
       {/* Sticky footer */}

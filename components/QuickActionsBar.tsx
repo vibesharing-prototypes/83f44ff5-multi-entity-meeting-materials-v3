@@ -2,6 +2,7 @@
 
 import { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import ConfirmActionModal from '@/components/ConfirmActionModal'
+import AgentProgressWidget from '@/components/AgentProgressWidget'
 import { useAgentActivity } from '@/components/AgentActivityContext'
 import { ENTITIES } from '@/components/data'
 
@@ -146,6 +147,7 @@ const MORE_BTN_W = 60
 export default function QuickActionsBar() {
   const [confirmAction, setConfirmAction] = useState<QuickAction | null>(null)
   const [visibleCount, setVisibleCount] = useState(QUICK_ACTIONS.length)
+  const [activeJobs, setActiveJobs] = useState<Record<string, string>>({}) // actionId → jobId
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const agentActivity = useAgentActivity()
@@ -208,6 +210,7 @@ export default function QuickActionsBar() {
       workflowSteps: steps,
       destination: action.destination,
     })
+    setActiveJobs(prev => ({ ...prev, [action.id]: jobId }))
     setTimeout(() => agentActivity.completeJob(jobId), 30_000)
   }
 
@@ -221,7 +224,7 @@ export default function QuickActionsBar() {
           <button
             key={action.id}
             onClick={() => setConfirmAction(action)}
-            className="flex-1 min-w-0 flex items-center gap-3 h-[64px] px-4 bg-white dark:bg-zinc-800 border border-black/[0.08] dark:border-zinc-700 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.18] dark:hover:border-zinc-500 hover:shadow-[0_4px_16px_rgba(0,0,0,0.09)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all group"
+            className="flex-1 min-w-0 flex items-center gap-3 h-[64px] px-4 bg-white dark:bg-zinc-800 border border-black/[0.08] dark:border-zinc-700 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-slate-200 dark:hover:border-zinc-500 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] [will-change:transform] [backface-visibility:hidden] transition-[transform,box-shadow,border-color,background-color] duration-[250ms] ease-out group"
           >
             <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-50 dark:bg-zinc-700 flex items-center justify-center group-hover:bg-slate-100 dark:group-hover:bg-zinc-600 transition-colors">
               <span className="text-slate-500 dark:text-zinc-300 group-hover:text-slate-700 dark:group-hover:text-zinc-100 transition-colors">{action.icon}</span>
@@ -277,6 +280,19 @@ export default function QuickActionsBar() {
           </div>
         )}
       </div>
+
+      {Object.entries(activeJobs).map(([actionId, jobId]) => {
+        const job = agentActivity?.jobs.find(j => j.id === jobId) ?? null
+        if (!job) return null
+        return (
+          <div key={actionId} className="mt-3">
+            <AgentProgressWidget
+              job={job}
+              onDismiss={() => setActiveJobs(prev => { const next = { ...prev }; delete next[actionId]; return next })}
+            />
+          </div>
+        )
+      })}
 
       {confirmAction && (
         <ConfirmActionModal

@@ -293,10 +293,10 @@ export default function PlanningSuggestions() {
             <div
               key={suggestion.id}
               onClick={isApplying || isApplied ? undefined : () => setSelectedSuggestion(suggestion)}
-              className={`suggestion-card group relative rounded-[20px] border overflow-hidden transition-all duration-300 ${
+              className={`suggestion-card group relative rounded-[20px] border overflow-hidden [will-change:transform] [backface-visibility:hidden] transition-[transform,box-shadow,border-color,background-color] duration-[250ms] ease-out ${
                 isApplied
                   ? 'border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/10 cursor-default'
-                  : 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 cursor-pointer hover:border-black/[0.14] dark:hover:border-zinc-600 hover:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.1)] hover:-translate-y-0.5'
+                  : 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-800/60 hover:border-slate-200 dark:hover:border-zinc-600 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:-translate-y-0.5'
               }`}
               style={{ animationDelay: `${i * 120}ms` } as React.CSSProperties}
             >
@@ -399,7 +399,7 @@ export default function PlanningSuggestions() {
                     </button>
                     <button
                       onClick={e => handleDetails(e, suggestion)}
-                      className="text-[13px] font-normal text-slate-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700 rounded-xl py-[11px] px-4 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.14] dark:hover:border-zinc-600 transition-colors"
+                      className="text-[13px] font-normal text-slate-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700 rounded-xl py-[11px] px-4 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-slate-200 dark:hover:border-zinc-600 transition-colors"
                     >
                       Details
                     </button>

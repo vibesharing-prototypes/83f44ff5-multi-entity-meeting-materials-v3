@@ -87,7 +87,7 @@ export default function ContextBar({ currentEntityId }: ContextBarProps) {
   const approved = ENTITIES.filter(e => e.completion >= 96).length
 
   return (
-    <div className="border-b border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex-shrink-0">
+    <div className="relative z-[60] border-b border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex-shrink-0">
       {/* Header strip */}
       <div className="px-6 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-5">
@@ -132,7 +132,7 @@ export default function ContextBar({ currentEntityId }: ContextBarProps) {
       </div>
 
       {/* Expandable panel */}
-      <div className={`overflow-hidden transition-all duration-200 ${isExpanded ? 'max-h-[640px]' : 'max-h-0'}`}>
+      <div className={`absolute left-0 right-0 z-[60] overflow-hidden transition-[max-height,opacity] duration-200 shadow-xl ${isExpanded ? 'max-h-[640px] opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="px-6 pb-4">
           <div className="rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden shadow-lg">
             <div className="overflow-y-auto max-h-[calc(100vh-76px)]">
