@@ -11,6 +11,12 @@ A **Next.js 14 prototype** for a corporate governance tool. It simulates a multi
 
 Deployed on VibeSharing (Vercel). Push to `main` → auto-deploys in ~30–60s. Never use `vercel deploy` or the VibeSharing MCP `deploy_files` tool (it corrupts binary files). Only `git push origin main`.
 
+**Deployment notes:**
+- `out/` is gitignored — Vercel builds it via `npm run build` (do NOT commit `out/`)
+- `vercel.json` must explicitly declare `"buildCommand": "npm run build"` and `"outputDirectory": "out"` or Vercel serves a 404
+- When creating a new VibeSharing prototype, push to the new repo remote, then push `vercel.json` with those two fields to trigger the first successful build
+- `import_repo` fails for repos already inside `vibesharing-prototypes` org — use `git remote add` + `git push` instead
+
 ---
 
 ## Tech Stack
