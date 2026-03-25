@@ -327,7 +327,7 @@ export default function BookBuilding() {
                   <div className="flex gap-2 mt-4 justify-end">
                     <button
                       onClick={e => handleCTA(e, item)}
-                      className="text-[14px] font-normal bg-slate-800 dark:bg-zinc-700 text-white dark:text-zinc-100 rounded-xl py-[11px] px-4 hover:bg-slate-900 dark:hover:bg-zinc-600 active:bg-slate-950 dark:active:bg-zinc-500 transition-colors"
+                      className="text-[14px] font-normal bg-slate-800 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl py-[11px] px-4 hover:bg-slate-900 dark:hover:bg-white active:bg-slate-950 dark:active:bg-zinc-200 transition-colors"
                     >
                       {item.actionLabel}
                     </button>
