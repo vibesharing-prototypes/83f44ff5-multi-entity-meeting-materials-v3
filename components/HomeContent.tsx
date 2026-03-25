@@ -9,24 +9,33 @@ import PlanningSuggestions from '@/components/PlanningSuggestions'
 import QuickActionsBar from '@/components/QuickActionsBar'
 import AgentUsecaseHeroes from '@/components/AgentUsecaseHeroes'
 import Footer from '@/components/Footer'
-import { ProtoStateProvider } from '@/components/ProtoStateContext'
+import { ProtoStateProvider, useProtoState } from '@/components/ProtoStateContext'
 
 function getSectionIndex(title: string): number | undefined {
   const i = SECTIONS.findIndex(s => s.title === title)
   return i >= 0 ? i : undefined
 }
 
-export default function HomeContent() {
+function HomeContentInner() {
   const getSectionIndexCb = useMemo(() => getSectionIndex, [])
+  const state = useProtoState()
+
+  const glowClass = state === 'calm'
+    ? 'hero-glow-calm'
+    : state === 'busy'
+    ? 'hero-glow-busy'
+    : 'hero-glow-critical'
 
   return (
-    <ProtoStateProvider>
-      <AgentActivityProvider getSectionIndex={getSectionIndexCb}>
-        <div className="flex-1 overflow-y-auto py-4">
-          <div className="mx-auto w-full max-w-6xl px-6 pb-24">
-            <div className="mb-6">
-              <AgentActivityBanner />
-            </div>
+    <AgentActivityProvider getSectionIndex={getSectionIndexCb}>
+      <div className="flex-1 overflow-y-auto py-4 relative">
+        {/* Full-width glow overlay */}
+        <div className={`hero-glow ${glowClass}`} aria-hidden />
+
+        <div className="mx-auto w-full max-w-6xl px-6 pb-24 relative">
+          <div className="mb-6">
+            <AgentActivityBanner />
+          </div>
             <div className="mb-4">
               <QuickActionsBar />
             </div>
@@ -34,11 +43,18 @@ export default function HomeContent() {
               <BookBuilding />
               <PlanningSuggestions />
             </div>
-            <AgentUsecaseHeroes />
-            <Footer />
-          </div>
+          <AgentUsecaseHeroes />
+          <Footer />
         </div>
-      </AgentActivityProvider>
+      </div>
+    </AgentActivityProvider>
+  )
+}
+
+export default function HomeContent() {
+  return (
+    <ProtoStateProvider>
+      <HomeContentInner />
     </ProtoStateProvider>
   )
 }
