@@ -22,8 +22,8 @@ export default function HomeContent() {
   return (
     <ProtoStateProvider>
       <AgentActivityProvider getSectionIndex={getSectionIndexCb}>
-        <div className="flex-1 overflow-y-auto px-6 py-4 home-gradient">
-          <div className="mx-auto w-full max-w-6xl">
+        <div className="flex-1 overflow-y-auto py-4 home-gradient">
+          <div className="mx-auto w-full max-w-6xl px-6">
             <div className="mb-6">
               <AgentActivityBanner />
             </div>

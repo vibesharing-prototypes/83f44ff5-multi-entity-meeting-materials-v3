@@ -89,7 +89,7 @@ export default function ContextBar({ currentEntityId }: ContextBarProps) {
   return (
     <div className="relative z-[60] border-b border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex-shrink-0">
       {/* Header strip */}
-      <div className="px-6 py-3.5 flex items-center justify-between">
+      <div className="mx-auto w-full max-w-6xl px-6 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-5">
           <span className="text-sm font-semibold text-slate-700 dark:text-zinc-300">
             {ENTITIES.length} Entities
@@ -133,7 +133,7 @@ export default function ContextBar({ currentEntityId }: ContextBarProps) {
 
       {/* Expandable panel */}
       <div className={`absolute left-0 right-0 z-[60] overflow-hidden transition-[max-height,opacity] duration-200 shadow-xl ${isExpanded ? 'max-h-[640px] opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-6 pb-4">
+        <div className="mx-auto w-full max-w-6xl px-6 pb-4">
           <div className="rounded-xl border border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden shadow-lg">
             <div className="overflow-y-auto max-h-[calc(100vh-76px)]">
 
