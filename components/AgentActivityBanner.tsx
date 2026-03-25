@@ -40,9 +40,9 @@ const CONFIGS: Record<ProtoState, StateConfig> = {
     headline: 'Nothing urgent — but plenty you can get ahead on.',
     subtext: '',
     metrics: [
-      { value: '8', label: 'Entities Active', numClass: 'text-blue-600 dark:text-blue-400', boxClass: 'border-blue-100 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/30' },
-      { value: '3', label: 'Packs Approved', numClass: 'text-emerald-600 dark:text-emerald-400', boxClass: 'border-emerald-100 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-950/30' },
-      { value: '0', label: 'Items Pending', numClass: 'text-slate-500 dark:text-zinc-400', boxClass: 'border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/30' },
+      { value: '8', label: 'Entities Active', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
+      { value: '3', label: 'Packs Approved', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
+      { value: '0', label: 'Items Pending', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
     ],
     workflow: null,
     wfComplete: 0,
@@ -59,9 +59,9 @@ const CONFIGS: Record<ProtoState, StateConfig> = {
     headline: '{total} items are waiting for review.',
     subtext: 'Several items are time-sensitive. Review flagged documents before your next board meeting.',
     metrics: [
-      { value: '{total}', label: 'Pending Review', numClass: 'text-amber-600 dark:text-amber-400', boxClass: 'border-amber-100 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/30' },
-      { value: '2', label: 'High Priority', numClass: 'text-red-600 dark:text-red-400', boxClass: 'border-red-100 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/30' },
-      { value: '4', label: 'Entities Affected', numClass: 'text-blue-600 dark:text-blue-400', boxClass: 'border-blue-100 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/30' },
+      { value: '{total}', label: 'Pending Review', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
+      { value: '2', label: 'High Priority', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
+      { value: '4', label: 'Entities Affected', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
     ],
     workflow: ['Flagged', 'In Review', 'Approved', 'Published'],
     wfComplete: 0,
@@ -78,9 +78,9 @@ const CONFIGS: Record<ProtoState, StateConfig> = {
     headline: '{total} risks require disclosure review.',
     subtext: 'Your monitoring agents detected emerging risks that may not be adequately disclosed in current SEC filings or Board meeting materials. Review recommended before the Feb 28 Board meeting.',
     metrics: [
-      { value: '1', label: 'Critical', numClass: 'text-red-600 dark:text-red-400', boxClass: 'border-red-100 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/30' },
-      { value: '2', label: 'High', numClass: 'text-amber-600 dark:text-amber-400', boxClass: 'border-amber-100 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/30' },
-      { value: '3', label: 'Filings Affected', numClass: 'text-blue-600 dark:text-blue-400', boxClass: 'border-blue-100 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/30' },
+      { value: '1', label: 'Critical', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
+      { value: '2', label: 'High', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
+      { value: '3', label: 'Filings Affected', numClass: 'text-slate-800 dark:text-zinc-100', boxClass: 'border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900' },
     ],
     workflow: ['Risk Detected', 'Assess & Prioritize', 'Draft Updates', 'Legal Review', 'Notify Board', 'File/Disclose'],
     wfComplete: 0,
@@ -129,17 +129,20 @@ export default function AgentActivityBanner() {
         </p>
 
         {/* Metrics */}
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-3 mt-8">
           {metrics.map((m, i) => (
             <div
               key={i}
               className={`flex flex-col items-center justify-center w-28 h-20 rounded-xl border ${m.boxClass}`}
             >
-              <span className={`text-3xl font-semibold leading-none mb-1.5 ${m.numClass}`}>{m.value}</span>
-              <span className="text-[11px] text-slate-500 dark:text-zinc-500 font-medium">{m.label}</span>
+              <span className={`text-[22px] font-semibold ${m.numClass}`}>{m.value}</span>
+              <span className="text-[11px] text-slate-400 dark:text-zinc-500">{m.label}</span>
             </div>
           ))}
         </div>
+
+        {/* Divider */}
+        <div className="mt-8 pt-6 border-t border-black/[0.05] dark:border-zinc-800" />
 
       </div>
     </div>

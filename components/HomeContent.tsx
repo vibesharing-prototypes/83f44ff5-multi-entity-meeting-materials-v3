@@ -36,7 +36,7 @@ function HomeContentInner() {
           <div className="mb-6">
             <AgentActivityBanner />
           </div>
-            <div className="mb-4">
+            <div className="mb-8">
               <QuickActionsBar />
             </div>
             <div className="flex flex-col gap-6">
