@@ -101,7 +101,7 @@ export default function AgentUsecaseHeroes() {
           return (
             <div
               key={hero.eyebrow}
-              className="relative rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden flex flex-col hover:border-slate-300 dark:hover:border-zinc-700 transition-colors group"
+              className="relative rounded-xl border border-black/[0.09] dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden flex flex-col hover:border-slate-300 dark:hover:border-zinc-700 transition-colors group"
             >
               {/* Accent top bar */}
               <div className={`h-0.5 w-full ${s.bar} opacity-70`} />

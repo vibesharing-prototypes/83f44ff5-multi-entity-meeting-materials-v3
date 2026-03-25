@@ -452,7 +452,7 @@ function PageThumbnail({
   return (
     <button
       onClick={onClick}
-      className="group text-left border border-slate-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 hover:border-slate-400 dark:hover:border-zinc-500 hover:shadow-md transition-all overflow-hidden"
+      className="group text-left border border-black/[0.09] dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 hover:border-slate-400 dark:hover:border-zinc-500 hover:shadow-md transition-all overflow-hidden"
     >
       <div className={`h-1.5 w-full ${status === 'complete' ? 'bg-emerald-400' : status === 'in-progress' ? 'bg-blue-400' : 'bg-slate-200'}`} />
       <div className="p-3">

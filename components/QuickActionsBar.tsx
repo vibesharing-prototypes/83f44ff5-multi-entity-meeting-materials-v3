@@ -224,7 +224,7 @@ export default function QuickActionsBar() {
           <button
             key={action.id}
             onClick={() => setConfirmAction(action)}
-            className="flex-1 min-w-0 flex items-center gap-3 h-[64px] px-4 bg-white dark:bg-zinc-800 border border-black/[0.08] dark:border-zinc-700 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-slate-200 dark:hover:border-zinc-500 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] [will-change:transform] [backface-visibility:hidden] transition-[transform,box-shadow,border-color,background-color] duration-[250ms] ease-out group"
+            className="flex-1 min-w-0 flex items-center gap-3 h-[64px] px-4 bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-slate-200 dark:hover:border-zinc-500 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] [will-change:transform] [backface-visibility:hidden] transition-[transform,box-shadow,border-color,background-color] duration-[250ms] ease-out group"
           >
             <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-slate-50 dark:bg-zinc-700 flex items-center justify-center group-hover:bg-slate-100 dark:group-hover:bg-zinc-600 transition-colors">
               <span className="text-slate-500 dark:text-zinc-300 group-hover:text-slate-700 dark:group-hover:text-zinc-100 transition-colors">{action.icon}</span>
@@ -244,7 +244,7 @@ export default function QuickActionsBar() {
           <div className="relative flex-shrink-0" data-more-dropdown>
             <button
               onClick={() => setDropdownOpen(v => !v)}
-              className="flex flex-col items-center justify-center gap-1 h-[64px] w-[52px] bg-white dark:bg-zinc-800 border border-black/[0.08] dark:border-zinc-700 rounded-xl text-slate-500 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.14] transition-all"
+              className="flex flex-col items-center justify-center gap-1 h-[64px] w-[52px] bg-white dark:bg-zinc-800 border border-black/[0.09] dark:border-zinc-700 rounded-xl text-slate-500 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-700 hover:border-black/[0.14] transition-all"
             >
               <span className="text-[12px] font-semibold leading-none">+{hidden.length}</span>
               <svg
@@ -257,7 +257,7 @@ export default function QuickActionsBar() {
 
             {dropdownOpen && (
               <div
-                className="absolute top-full right-0 mt-1.5 bg-white dark:bg-zinc-900 border border-black/[0.08] dark:border-zinc-700 rounded-2xl shadow-xl overflow-hidden z-30 min-w-[220px]"
+                className="absolute top-full right-0 mt-1.5 bg-white dark:bg-zinc-900 border border-black/[0.09] dark:border-zinc-700 rounded-2xl shadow-xl overflow-hidden z-30 min-w-[220px]"
                 style={{ animation: 'confirmModalIn 150ms cubic-bezier(0.22,1,0.36,1) both' }}
               >
                 {hidden.map(action => (

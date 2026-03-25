@@ -134,7 +134,7 @@ export default function ContextBar({ currentEntityId }: ContextBarProps) {
       {/* Expandable panel */}
       <div className={`absolute left-0 right-0 z-[60] overflow-hidden transition-[max-height,opacity] duration-200 shadow-xl ${isExpanded ? 'max-h-[640px] opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="px-6 pb-4">
-          <div className="rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden shadow-lg">
+          <div className="rounded-xl border border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden shadow-lg">
             <div className="overflow-y-auto max-h-[calc(100vh-76px)]">
 
             {/* Table header */}

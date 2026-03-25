@@ -18,7 +18,7 @@ function EntityCard({ entity }: { entity: Entity }) {
   const daysClass = getDaysClass(daysUntil)
 
   return (
-    <div className="flex-shrink-0 w-52 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 hover:border-slate-400 dark:hover:border-zinc-600 hover:shadow-sm transition-all cursor-pointer select-none">
+    <div className="flex-shrink-0 w-52 rounded-lg border border-black/[0.09] dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 hover:border-slate-400 dark:hover:border-zinc-600 hover:shadow-sm transition-all cursor-pointer select-none">
       <p className="text-xs text-slate-400 dark:text-zinc-500 font-medium mb-0.5 uppercase tracking-wide">{entity.countryCode}</p>
       <p className="text-sm font-semibold text-slate-800 dark:text-zinc-200 leading-snug mb-3 truncate">{entity.shortName}</p>
 

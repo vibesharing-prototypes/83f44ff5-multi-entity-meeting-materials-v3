@@ -84,7 +84,7 @@ export default function ConfirmActionModal({
             <p className="text-[10px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-widest mb-3">
               Affected entities
             </p>
-            <div className="rounded-2xl border border-slate-100 dark:border-zinc-800 overflow-hidden divide-y divide-slate-100 dark:divide-zinc-800">
+            <div className="rounded-2xl border border-black/[0.09] dark:border-zinc-800 overflow-hidden divide-y divide-black/[0.05] dark:divide-zinc-800">
               {entities.map(entity => (
                 <div key={entity.id} className="flex items-center gap-4 px-5 py-4 bg-white dark:bg-zinc-900">
                   <EntityLogo entity={entity} size="lg" />
